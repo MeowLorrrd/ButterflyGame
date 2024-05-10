@@ -118,6 +118,9 @@ void Item::NewItem(Vector2f xy, Uint8 _type, Item& _item)
 		break;
 	case NETBOMB:
 		break;
+	case BUTTERFLYMONARCH:
+		//spawn butterfly manually
+		break;
 	};
 }
 void Item::TurnItemToNewType(Item& old, unsigned short new_type)
