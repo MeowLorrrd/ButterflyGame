@@ -123,7 +123,7 @@ void Item::NewItem(Vector2f xy, Uint8 _type, Item& _item)
 void Item::TurnItemToNewType(Item& old, unsigned short new_type)
 {
 	old.type = (new_type < COUNT) ? new_type : 0;
-	if (old.type >= Item::BUTTERFLYMONARCH && old.type <= Item::BUTTERFLYGOLDEN) old.max_stack = 30;
+	if (old.type >= Item::BUTTERFLYMONARCH && old.type <= Item::BUTTERFLYGLASS) old.max_stack = 30;
 	old.frame.setTexture(old.textures[old.type]);
 }
 

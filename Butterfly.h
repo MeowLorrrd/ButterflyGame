@@ -28,6 +28,8 @@ public:
 	//	Butterflies[temp]->... = ...;
 	static int NewButterfly(Vector2f start_pos, unsigned short type, Butterfly* butterflies[BUTTERFLY_LIMIT]);
 
+	//Let the game randomly spawn a butterfly
+	//'chance' sets the spawn chance, so chance = 60 would spawn every 60 frames on average
 	static void SpawnButterflyNatural(int chance, Butterfly* butterflies[BUTTERFLY_LIMIT]);
 	//'Kills' a butterfly, rendering it inactive and freeing a slot
 	static void KillButterfly(Butterfly* butterflies[BUTTERFLY_LIMIT], unsigned char unique_id);
@@ -51,7 +53,7 @@ public:
 private:
 	Vector2f velocity, old_velocity;
 	Vector2f position;
-	Texture* textures[2]; // Access textures with Butterfly [TYPES]
+	Texture* textures[4]; // Access textures with Butterfly [TYPES]
 	RectangleShape frame; //Frame that is drawn to window
 	IntRect animated_frame; //Current frame that will be drawn
 

@@ -296,7 +296,7 @@ void Player::SetItem(Item* inventory[INVENTORY_SIZE], unsigned char item_type)
 	}
 	for (int i = 0u; i < INVENTORY_SIZE; i++)
 	{
-		if (inventory[i]->type >= Item::Types::BUTTERFLYMONARCH && inventory[i]->type <= Item::Types::BUTTERFLYGOLDEN)
+		if (inventory[i]->type >= Item::Types::BUTTERFLYMONARCH && inventory[i]->type <= Item::Types::BUTTERFLYGLASS)
 			inventory[i]->max_stack = 30;
 		if (inventory[i]->type == item_type && inventory[i]->stack < inventory[i]->max_stack)
 		{

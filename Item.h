@@ -41,7 +41,9 @@ public:
 		NETBOMB = 1,
 		BUTTERFLYMONARCH = 2,
 		BUTTERFLYGOLDEN = 3,
-		COUNT = 4 //Amount of current items
+		BUTTERFLYNEBULA = 4,
+		BUTTERFLYGLASS = 5,
+		COUNT = 6 //Amount of current items
 	};
 	//Current stack size of inventory slot
 	unsigned int stack;
@@ -66,7 +68,7 @@ private:
 	//Frame for drawing the inventory slots
 	RectangleShape inventory_frame;
 	//Textures for the items
-	Texture* textures[4];
+	Texture* textures[6];
 
 	//Textures for inventory slots and selected inventory slot
 	Texture* inv_texture; Texture* inv_texture_s;

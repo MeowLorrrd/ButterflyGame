@@ -47,6 +47,8 @@ void Butterfly::UpdateFrame(Butterfly& butterfly)
 	{
 	case MONARCH:
 	case GOLDEN:
+	case NEBULA:
+	case GLASSWING:
 		butterfly.animation_timer = Math::ResetValue<int>(butterfly.animation_timer + 1, 0, 9);
 		if (butterfly.animation_timer > 8)
 		{
@@ -88,6 +90,8 @@ void Butterfly::Movement(float dt, Butterfly& butterfly)
 	{
 	case MONARCH:
 	case GOLDEN:
+	case NEBULA:
+	case GLASSWING:
 		idle_time = Random::NextInt(6, 11) * 60.f;
 		if (butterfly.custom_ai[0] >= idle_time || butterfly.alive_timer == 1)
 		{
@@ -131,12 +135,10 @@ int Butterfly::NewButterfly(Vector2f xy, unsigned short type, Butterfly* butterf
 	{
 		butterflies[new_id]->unique_id = new_id;
 
-		//butterflies[new_id] = new Butterfly(0);
 		butterflies[new_id]->newX = 800.f;
 		butterflies[new_id]->newY = 450.f;
 		butterflies[new_id]->custom_ai[0] = 0.0f;
 		butterflies[new_id]->custom_ai[1] = 0.0f;
-		//butterflies[new_id]->animation_timer_speed = 1.0f;
 		butterflies[new_id]->animation_timer = 0;
 		butterflies[new_id]->type = type;
 		butterflies[new_id]->is_active = true;
@@ -146,22 +148,27 @@ int Butterfly::NewButterfly(Vector2f xy, unsigned short type, Butterfly* butterf
 		butterflies[new_id]->alive_timer = 0;
 		butterflies[new_id]->frame.setTexture(butterflies[new_id]->textures[type]);
 		butterflies[new_id]->current_frame = 0;
+		butterflies[new_id]->width = 12.f;
+		butterflies[new_id]->height = 36.f / 3.f;
+		butterflies[new_id]->scale = 1.f + (Random::NextInt(75, 200) / 100.f);
 
 		switch (butterflies[new_id]->type)
 		{
 		case MONARCH:
-			butterflies[new_id]->width = 12.f;
-			butterflies[new_id]->height = 36.f / 3.f;
-			butterflies[new_id]->scale = 1.f + (Random::NextInt(75, 200) / 100.f);
 			butterflies[new_id]->item_type = 2;
 			break;
 		case GOLDEN:
-			butterflies[new_id]->width = 12.f;
-			butterflies[new_id]->height = 36.f / 3.f;
 			butterflies[new_id]->scale = 1.f + (Random::NextInt(50, 175) / 100.f);
 			butterflies[new_id]->item_type = 3;
 			break;
+		case NEBULA:
+			butterflies[new_id]->item_type = 4;
+			break;
+		case GLASSWING:
+			butterflies[new_id]->item_type = 5;
+			break;
 		}
+
 		butterflies[new_id]->animated_frame = IntRect(0, butterflies[new_id]->current_frame, (int)butterflies[new_id]->width, (int)butterflies[new_id]->height);
 		butterflies[new_id]->frame.setSize(Vector2f(butterflies[new_id]->width, butterflies[new_id]->height));
 		butterflies[new_id]->frame.setOrigin(butterflies[new_id]->width / 2.0f, butterflies[new_id]->height / 2.0f);
@@ -185,13 +192,17 @@ void Butterfly::SpawnButterflyNatural(int chance, Butterfly* butterflies[BUTTERF
 	{
 		if (Random::NextBool(50))
 			NewButterfly(Vector2f(-100.f, 500.f), GOLDEN, butterflies);
-		else
+		else if (Random::NextBool(3))
 			NewButterfly(Vector2f(-100.f, 500.f), MONARCH, butterflies);
+		else if (Random::NextBool(2))
+			NewButterfly(Vector2f(-100.f, 500.f), NEBULA, butterflies);
+		else
+			NewButterfly(Vector2f(-100.f, 500.f), GLASSWING, butterflies);
 	}
 }
 void Butterfly::KillButterfly(Butterfly* butterflies[BUTTERFLY_LIMIT], unsigned char _id)
 {
-	butterflies[_id]->type = Butterfly::TYPES::NEBULA; //Nebula for now, should change to COUNT when other types actually exist
+	butterflies[_id]->type = Butterfly::TYPES::COUNT;
 	butterflies[_id]->is_active = false;
 
 	/*Butterfly* _butterfly[BUTTERFLY_LIMIT]{};

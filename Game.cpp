@@ -32,8 +32,6 @@ void Game::Update(float _deltaTime)
 		if (butterflies[i]->is_active)
 			//continue;
 		{
-			printf("[xy]:\t[%f, %f]\n", Butterfly::GetPosition(*butterflies[0]).x, Butterfly::GetPosition(*butterflies[0]).y);
-
 			Butterfly::Update(_deltaTime, *butterflies[i]);
 			if (Player::GetCollision(*my_player, Butterfly::GetGlobalBounds(*butterflies[i])))
 			{
@@ -46,7 +44,7 @@ void Game::Update(float _deltaTime)
 			}
 		}
 	}
-	Butterfly::SpawnButterflyNatural(60, butterflies);
+	Butterfly::SpawnButterflyNatural(1, butterflies);
 }
 void Game::UpdateInput()
 {
