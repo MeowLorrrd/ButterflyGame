@@ -1,7 +1,5 @@
-Fix Butterfly::GetCenter(..)
+Fix Butterfly::GetCenter(..) ;; i think it already works??
 Fix Butterflies flikkering after dying
-
-Create Nebula and Glasswing butterflies
 
 Make sure Item is not deleted if inventory is full
 
