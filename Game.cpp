@@ -29,14 +29,21 @@ void Game::Update(float _deltaTime)
 	my_player->Update(_deltaTime, &input);
 	for (int i = 0u; i < BUTTERFLY_LIMIT; i++)
 	{
-		if (!butterflies[i]->is_active)
-			break;
-		Butterfly::Update(_deltaTime, *butterflies[i]);
-		if (Player::GetCollision(*my_player, Butterfly::GetGlobalBounds(*butterflies[0])))
+		if (butterflies[i]->is_active)
+			//continue;
 		{
-			//TODO:: 
-			//	Kill butterfly
-			//	Give player butterfly item
+			printf("[xy]:\t[%f, %f]\n", Butterfly::GetPosition(*butterflies[0]).x, Butterfly::GetPosition(*butterflies[0]).y);
+
+			Butterfly::Update(_deltaTime, *butterflies[i]);
+			if (Player::GetCollision(*my_player, Butterfly::GetGlobalBounds(*butterflies[i])))
+			{
+				//TODO:: 
+				//	Give player butterfly item												[DONE]
+				//	Kill butterfly															[50%]
+				//	Set butterfly array to  i (instead of 0)								[DONE]
+				Player::SetItem(my_player->inventory, Butterfly::GetItemType(*butterflies[i]));
+				Butterfly::KillButterfly(butterflies, i);
+			}
 		}
 	}
 	Butterfly::SpawnButterflyNatural(60, butterflies);
@@ -63,7 +70,7 @@ void Game::UpdateInput()
 	}
 	if (input.HasPressedKey(Keyboard::Escape)) render_window->close();
 #ifndef DEBUG
-	if (input.HasPressedKey(Keyboard::N)) Butterfly::NewButterfly(Vector2f(800.f,450.f), 0u, butterflies);
+	if (input.HasPressedKey(Keyboard::N)) Butterfly::NewButterfly(Vector2f(800.f, 450.f), 0u, butterflies);
 #endif
 }
 
@@ -73,9 +80,9 @@ void Game::Draw()
 	background.Draw(*render_window, render_states);
 	for (int i = 0u; i < BUTTERFLY_LIMIT; i++)
 	{
-		if (!butterflies[i]->is_active)
-			break;
-		Butterfly::Draw(*render_window, render_states, *butterflies[i]);
+		if (butterflies[i]->is_active)
+			//continue;
+			Butterfly::Draw(*render_window, render_states, *butterflies[i]);
 	}
 	my_player->Draw(*render_window, render_states);
 	render_window->display();

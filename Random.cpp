@@ -32,5 +32,6 @@ namespace Random
 	}
 	*/
 	// ^^ this does not work... yet
+	// But arr[sizeof(...)/sizeof(*...)] can be used anyway
 }
 #endif // ! _RANDOM_

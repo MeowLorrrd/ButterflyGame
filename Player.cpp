@@ -281,3 +281,33 @@ bool Player::GetCollision(Player& p, FloatRect other)
 		return Item::GetCollision(*item, other);
 	return false;
 }
+
+Item* Player::GetInventory(Player& player)
+{
+	return *player.inventory;
+}
+
+void Player::SetItem(Item* inventory[INVENTORY_SIZE], unsigned char item_type)
+{
+	if (item_type >= Item::Types::COUNT)
+	{
+		printf("Tried setting unexisting item!\n");
+		return;
+	}
+	for (int i = 0u; i < INVENTORY_SIZE; i++)
+	{
+		if (inventory[i]->type >= Item::Types::BUTTERFLYMONARCH && inventory[i]->type <= Item::Types::BUTTERFLYGOLDEN)
+			inventory[i]->max_stack = 30;
+		if (inventory[i]->type == item_type && inventory[i]->stack < inventory[i]->max_stack)
+		{
+			inventory[i]->stack++;
+			return;
+		}
+		if (inventory[i]->type == Item::Types::COUNT)
+		{
+			inventory[i]->type = item_type;
+			inventory[i]->stack = 1;
+			return;
+		}
+	}
+}

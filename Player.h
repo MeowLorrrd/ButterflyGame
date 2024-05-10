@@ -19,12 +19,14 @@ public:
 	void Update(float deltaTime, Input* input);
 	Vector2f GetCenter();
 
+	Item* inventory[INVENTORY_SIZE];
 	float width, height;
-	Vector2f position;
 	static Item* GetItem(Player& player);
 	static Vector2f GetItemPosition(Player& player);
 	static Vector2f GetItemSize(Player& player);
 	static bool GetCollision(Player& player, FloatRect other);
+	static Item* GetInventory(Player& player);
+	static void SetItem(Item* inventory[INVENTORY_SIZE], unsigned char item_type);
 private:
 	const float
 		RUN_SLOWDOWN = 0.6f,
@@ -38,18 +40,18 @@ private:
 	Vector2u window_borders;
 
 	Vector2f velocity;
+	Vector2f position;
 
 	bool can_jump;
 
 	Uint8 current_frame, animation_time;
-	int8_t direction = 1;
+	Int8 direction = 1;
 	int selected_item_slot;
 
 	RectangleShape frame = RectangleShape();
 	IntRect texture_rectangle = IntRect();
 	Texture texture = Texture();
 	Item* items;
-	Item* inventory[INVENTORY_SIZE];
 
 	void Collision();
 	void UseItem(Input* input);

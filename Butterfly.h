@@ -18,6 +18,7 @@ class Butterfly
 public:
 	Butterfly(bool first_init);
 	virtual ~Butterfly();
+	bool is_active;
 	static void Draw(RenderWindow& render_target, RenderStates render_states, Butterfly& butterfly);
 	static void Update(float deltaTime, Butterfly& butterfly);
 	//Spawning function for new butterflies
@@ -28,20 +29,17 @@ public:
 	static int NewButterfly(Vector2f start_pos, unsigned short type, Butterfly* butterflies[BUTTERFLY_LIMIT]);
 
 	static void SpawnButterflyNatural(int chance, Butterfly* butterflies[BUTTERFLY_LIMIT]);
-
-	const enum TOITEMTYPE //TODO:: Add items that the Butterflies can convert into upon being caught by the Player
-	{
-
-	};
+	//'Kills' a butterfly, rendering it inactive and freeing a slot
+	static void KillButterfly(Butterfly* butterflies[BUTTERFLY_LIMIT], unsigned char unique_id);
 	//Types of butterflies
 	const enum TYPES
 	{
 		MONARCH = 0,
 		GOLDEN = 1,
 		NEBULA = 2,
-		GLASSWING = 3
+		GLASSWING = 3,
+		COUNT = 4
 	};
-	bool is_active;
 	//Returns center of the butterfly
 	static Vector2f GetCenter(Butterfly& butterfly);
 	//Returns width and height, multiplied by scale
@@ -49,6 +47,7 @@ public:
 	//Returns the top-left position of the butterfly
 	static Vector2f GetPosition(Butterfly& butterfly);
 	static FloatRect GetGlobalBounds(Butterfly& butterfly);
+	static unsigned char GetItemType(Butterfly& butterfly);
 private:
 	Vector2f velocity, old_velocity;
 	Vector2f position;
@@ -56,7 +55,8 @@ private:
 	RectangleShape frame; //Frame that is drawn to window
 	IntRect animated_frame; //Current frame that will be drawn
 
-	Uint16 type; 
+	unsigned char type; //Type of butterfly
+	unsigned char item_type; //Item type that butterfly converts into
 	unsigned int current_frame,
 		alive_timer,
 		animation_timer;

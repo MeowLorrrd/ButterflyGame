@@ -35,12 +35,18 @@ public:
 	//Type of item
 	//Defines behavior and sprite
 	Uint8 type;
-	const enum TYPES
+	const enum Types
 	{
 		BASICBUGNET = 0,
 		NETBOMB = 1,
-		COUNT = 2 //Amount of current items
+		BUTTERFLYMONARCH = 2,
+		BUTTERFLYGOLDEN = 3,
+		COUNT = 4 //Amount of current items
 	};
+	//Current stack size of inventory slot
+	unsigned int stack;
+	//Maximum stack size of inventory slot
+	unsigned int max_stack;
 	//How quick another item can be used
 	//Value is in frames, so item_use_delay = 60 would be 1 second
 	//A value of 0 means that the item is not in use
@@ -48,16 +54,19 @@ public:
 	//Used for flipping the sprite horizontally
 	//Value should either be 1 or -1
 	signed char dirX;
+	//Returns top-left position of the item
 	static Vector2f GetPosition(Item& item);
+	//Returns size of item, with scale factored in
 	static Vector2f GetSize(Item& item);
 	static bool GetCollision(Item& item, FloatRect other);
+
 private:
 	//Frame for drawing items in the inventory and in the world (if active)
 	RectangleShape frame;
 	//Frame for drawing the inventory slots
 	RectangleShape inventory_frame;
 	//Textures for the items
-	Texture* textures[2];
+	Texture* textures[4];
 
 	//Textures for inventory slots and selected inventory slot
 	Texture* inv_texture; Texture* inv_texture_s;
