@@ -17,8 +17,11 @@ class Item
 public:
 	Item(AssetHandler* asset_handler);
 	virtual ~Item();
-	//Draws Items in the players inventory
+	//Draws Inventory UI
+	//Will only draw top row (hotbar) if inventory is closed
 	static void DrawInventoryUI(RenderWindow& render_window, RenderStates render_states, Item& inv, unsigned int slot_type, unsigned int s_item, bool inventory_open);
+	//Draws Inventory contents
+	//Will only draw top row (hotbar) if inventory is closed
 	static void DrawInventoryContents(RenderWindow& render_window, RenderStates render_states, Item& inv, unsigned int slot_type, bool inventory_open);
 	//Draws Items used by the player
 	//Should not be called if item is not used
@@ -65,17 +68,10 @@ public:
 private:
 	//Frame for drawing items in the inventory and in the world (if active)
 	RectangleShape frame;
-	//Frame for drawing the inventory slots
-	RectangleShape inventory_frame;
 	Sprite inventory_sprite;
 	Sprite inventory_sprite_s;
 
 	AssetHandler* asset_handler;
-	//Textures for the items
-	Texture* textures[6];
-
-	//Textures for inventory slots and selected inventory slot
-	Texture* inv_texture; Texture* inv_texture_s;
 
 	//Position for used item
 	Vector2f position;
@@ -100,6 +96,6 @@ private:
 	//How quick another item can be used
 	//Value is in frames, so item_use_delay = 60 would be 1 second
 	//A value of 0 means that the item is not in use
-	unsigned char item_use_delay;
+	unsigned short item_use_delay;
 };
 #endif

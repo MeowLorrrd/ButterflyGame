@@ -20,7 +20,8 @@ public:
 		Butterflies,
 		Backgrounds,
 		Floors,
-		UI
+		UI,
+		Items
 	};
 	enum ButterflyTypes
 	{
@@ -42,6 +43,15 @@ public:
 		InventorySlot,
 		InventorySlotSelected
 	};
+	enum ItemTypes
+	{
+		BugnetBasic,
+		Netbomb,
+		ButterflyMonarch,
+		ButterflyGold,
+		ButterflyNebula,
+		ButterflyGlass
+	};
 private:
 	Font* font;
 	Texture* player_texture;
@@ -49,5 +59,6 @@ private:
 	Texture* background_textures[1];
 	Texture* floor_textures[1];
 	std::vector<Texture> ui_textures;
+	std::vector<Texture> item_textures;
 };
 #endif

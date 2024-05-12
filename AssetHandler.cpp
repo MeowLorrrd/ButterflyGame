@@ -68,6 +68,17 @@ AssetHandler::AssetHandler()
 		}
 		ui_textures.push_back(_t);
 	}
+	item_textures.clear();
+	for (int i = 0u; i < 6; i++)
+	{
+		texture_path = "Assets/Item_" + std::to_string(i) + ".png";
+		Texture _t = Texture();
+		if (!_t.loadFromFile(texture_path))
+		{
+			printf("Could not load file!\nMissing file : \n\t[% s]", texture_path.c_str());
+		}
+		item_textures.push_back(_t);
+	}
 }
 
 AssetHandler::~AssetHandler()
@@ -105,6 +116,8 @@ Texture* AssetHandler::GetTexture(AssetHandler* instance, int type, int _st = 0)
 		return (_st >= 0 && _st <= (sizeof(floor_textures) / sizeof(*floor_textures))) ? instance->floor_textures[_st] : instance->floor_textures[0];
 	case TextureTypes::UI:
 		return (_st >= 0 && _st <= instance->ui_textures.size()) ? &instance->ui_textures.at(_st) : &instance->ui_textures.at(0);
+	case TextureTypes::Items:
+		return (_st >= 0 && _st <= instance->item_textures.size()) ? &instance->item_textures.at(_st) : &instance->item_textures.at(0);
 	}
 	return new Texture();
 }

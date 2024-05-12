@@ -2,14 +2,6 @@
 
 Item::Item(AssetHandler* _ah)
 {
-	std::string asset_path;
-	for (int i = 0u; i < sizeof(textures) / sizeof(*textures); i++)
-	{
-		asset_path = "Assets/Item_" + std::to_string(i) + ".png";
-		textures[i] = new Texture();
-		if (!textures[i]->loadFromFile(asset_path))
-			printf("Could not load texture!\nMissing texture: [Item_%i.png]", i);
-	}
 	asset_handler = _ah;
 
 	inventory_sprite.setTexture(*AssetHandler::GetTexture(_ah, AssetHandler::UI, AssetHandler::UITypes::InventorySlot));
@@ -32,13 +24,7 @@ Item::Item(AssetHandler* _ah)
 }
 Item::~Item()
 {
-	for (int i = 0u; i < sizeof(textures) / sizeof(*textures); i++)
-	{
-		delete textures[i];
-	}
-	delete[] & textures;
-	delete inv_texture;
-	delete inv_texture_s;
+	
 }
 
 void Item::DrawInventoryUI(RenderWindow& render_window, RenderStates render_states, Item& _inv, unsigned int slot_type, unsigned int s_item, bool full_ui)
@@ -64,7 +50,7 @@ void Item::DrawInventoryContents(RenderWindow& render_window, RenderStates rende
 {
 	if (_inv.type >= 0 && _inv.type < COUNT)
 	{
-		_inv.frame.setTexture(_inv.textures[_inv.type]);
+		_inv.frame.setTexture(AssetHandler::GetTexture(_inv.asset_handler, AssetHandler::Items, _inv.type));
 		_inv.frame.setSize(Vector2f(56.f, 56.f));
 		float x = 84.f * static_cast<int>(slot_type % 9) + 40.f;
 		float y = 84.f * static_cast<int>(slot_type / 9.f) + 40.f;
@@ -111,7 +97,7 @@ void Item::NewItem(Vector2f xy, Uint8 _type, Item& _item)
 	_item.type = _type;
 	_item.position = xy;
 	_item.rotation = -40.0f;
-	_item.frame.setTexture(_item.textures[_item.type]);
+	_item.frame.setTexture(AssetHandler::GetTexture(_item.asset_handler, AssetHandler::Items, _item.type));
 	switch (_item.type)
 	{
 	case BASICBUGNET:
@@ -134,7 +120,7 @@ void Item::TurnItemToNewType(Item& old, unsigned short new_type)
 {
 	old.type = (new_type < COUNT) ? new_type : 0;
 	if (old.type >= Item::BUTTERFLYMONARCH && old.type <= Item::BUTTERFLYGLASS) old.max_stack = 30;
-	old.frame.setTexture(old.textures[old.type]);
+	old.frame.setTexture(AssetHandler::GetTexture(old.asset_handler, AssetHandler::Items, old.type));
 }
 
 Vector2f Item::GetPosition(Item& item)
