@@ -1,10 +1,10 @@
-Fix Butterfly::GetCenter(..) ;; i think it already works??
-Fix Butterflies flikkering after dying
+Butterflies:
+	Fix flikkering after 'killing'
 
-Make sure Item is not deleted if inventory is full
-Increase Inventory Slots to 16 (1 for selected mouse slot)
-	Actually do like 4x7 (+1) bc 16 is stupidly low
-	Make toggle-able inventory UI, with the disabled state only showing a hotbar
+Inventory:
+	Make sure items don't get deleted if inventory is full
+	
 
-Add fonts (for item stacks)
+UI:
+	Make text system (item stacks, item names and butterfly names)
 
