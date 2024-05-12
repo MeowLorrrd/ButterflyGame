@@ -1,10 +1,8 @@
 #include "Player.h"
 
-Player::Player()
+Player::Player(AssetHandler* _ah)
 {
 	position = Vector2f(800.f, 450.f);
-	if (!texture.loadFromFile("Assets/Player_Frog.png"))
-		printf("Could not load player file!\n");
 	width = DEFAULT_WIDTH;
 	height = DEFAULT_HEIGHT / TOTAL_FRAMES;
 	current_frame = 0;
@@ -14,16 +12,17 @@ Player::Player()
 		width / 2.0f,
 		height / 2.0f));
 	frame.setPosition(Vector2f(position));
-	frame.setTexture(&texture);
+	frame.setTexture(AssetHandler::GetTexture(_ah, AssetHandler::Player, 0));
 	frame.setTextureRect(texture_rectangle);
 
-	items = new Item();
+	items = new Item(_ah);
 	for (int i = 0u; i < INVENTORY_SIZE; i++)
 	{
-		inventory[i] = new Item();
+		inventory[i] = new Item(_ah);
 	}
 	selected_item_slot = 0;
 	can_jump = false;
+	inventory_open = false;
 }
 Player::~Player()
 {
@@ -44,11 +43,11 @@ void Player::Draw(RenderWindow& render_target, RenderStates render_states)
 	//Draw Inventory (ALL ITEMS, if item type is Item::COUNT, draw emty slot
 	for (int i = 0u; i < INVENTORY_SIZE; i++)
 	{
-		Item::DrawInventoryUI(render_target, render_states, *inventory[i], i, selected_item_slot);
+		Item::DrawInventoryUI(render_target, render_states, *inventory[i], i, selected_item_slot, inventory_open);
 	}
 	for (int i = 0u; i < INVENTORY_SIZE; i++)
 	{
-		Item::DrawInventoryContents(render_target, render_states, *inventory[i], i);
+		Item::DrawInventoryContents(render_target, render_states, *inventory[i], i, inventory_open);
 	}
 	if (items->item_use_delay > 0)
 		Item::DrawInWorld(render_target, render_states, *items, GetCenter());
@@ -160,11 +159,11 @@ void Player::UseItem(Input* input)
 #endif
 	if (input->HasPressedKey(Keyboard::Up))
 	{
-		selected_item_slot -= 5;
+		selected_item_slot -= 9;
 	}
 	else if (input->HasPressedKey(Keyboard::Down))
 	{
-		selected_item_slot += 5;
+		selected_item_slot += 9;
 	}
 	else if (input->HasPressedKey(Keyboard::Left))
 	{
@@ -174,14 +173,17 @@ void Player::UseItem(Input* input)
 	{
 		selected_item_slot++;
 	}
-	if (selected_item_slot > 14)
+	if (selected_item_slot > 8)
 	{
-		selected_item_slot -= 15;
+		selected_item_slot = 8;
 	}
 	else if (selected_item_slot < 0)
 	{
-		selected_item_slot += 15;
+		selected_item_slot = 0;
 	}
+	printf("\n%i", selected_item_slot);
+	if (input->HasPressedKey(Keyboard::E))
+		inventory_open = !inventory_open;
 	if (input->HasPressedMouse(Mouse::Left))
 	{
 		if (items->item_use_delay > 0)//Can't use item if an item already exists

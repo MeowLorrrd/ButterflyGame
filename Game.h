@@ -10,6 +10,7 @@
 #include "Background.h"
 #include "Random.cpp"
 #include "Input.h"
+#include "AssetHandler.h"
 
 using namespace sf;
 
@@ -22,6 +23,7 @@ private:
 	RenderStates render_states;
 	Keyboard keyboard;
 	Input input;
+	AssetHandler* asset_handler;
 
 	void SetupGameWindow();
 	void UpdateInput();
@@ -35,7 +37,7 @@ public:
 	//Returns true if window is currently focussed, game is paused otherwise
 	const bool WindowHasFocus() const;
 
-	Player* my_player = new Player();
+	Player* my_player;
 	Butterfly* butterflies[BUTTERFLY_LIMIT];
 	Background background = Background();
 };

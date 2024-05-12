@@ -3,14 +3,15 @@
 Game::Game()
 {
 	SetupGameWindow();
+	my_player = new Player(asset_handler);
 	for (int i = 0u; i < BUTTERFLY_LIMIT; i++)
 	{
-		butterflies[i] = new Butterfly(1);
+		butterflies[i] = new Butterfly(asset_handler);
 	}
 }
 Game::~Game()
 {
-	delete this->render_window;
+	delete render_window;
 }
 void Game::SetupGameWindow()
 {
@@ -22,6 +23,8 @@ void Game::SetupGameWindow()
 
 	this->render_window = new RenderWindow(video_mode, display_name, Style::Titlebar | Style::Close);
 	this->render_window->setFramerateLimit(60);
+
+	this->asset_handler = new AssetHandler();
 }
 void Game::Update(float _deltaTime)
 {
@@ -29,19 +32,15 @@ void Game::Update(float _deltaTime)
 	my_player->Update(_deltaTime, &input);
 	for (int i = 0u; i < BUTTERFLY_LIMIT; i++)
 	{
-		if (butterflies[i]->is_active)
-			//continue;
+		if (!butterflies[i]->is_active)
 		{
-			Butterfly::Update(_deltaTime, *butterflies[i]);
-			if (Player::GetCollision(*my_player, Butterfly::GetGlobalBounds(*butterflies[i])))
-			{
-				//TODO:: 
-				//	Give player butterfly item												[DONE]
-				//	Kill butterfly															[50%]
-				//	Set butterfly array to  i (instead of 0)								[DONE]
-				Player::SetItem(my_player->inventory, Butterfly::GetItemType(*butterflies[i]));
-				Butterfly::KillButterfly(butterflies, i);
-			}
+			continue;
+		}
+		Butterfly::Update(_deltaTime, *butterflies[i]);
+		if (Player::GetCollision(*my_player, Butterfly::GetGlobalBounds(*butterflies[i])))
+		{
+			Player::SetItem(my_player->inventory, Butterfly::GetItemType(*butterflies[i]));
+			Butterfly::KillButterfly(butterflies, i);
 		}
 	}
 	Butterfly::SpawnButterflyNatural(1, butterflies);
@@ -78,9 +77,11 @@ void Game::Draw()
 	background.Draw(*render_window, render_states);
 	for (int i = 0u; i < BUTTERFLY_LIMIT; i++)
 	{
-		if (butterflies[i]->is_active)
-			//continue;
-			Butterfly::Draw(*render_window, render_states, *butterflies[i]);
+		if (!butterflies[i]->is_active)
+		{
+			continue;
+		}
+		Butterfly::Draw(*render_window, render_states, *butterflies[i]);
 	}
 	my_player->Draw(*render_window, render_states);
 	render_window->display();

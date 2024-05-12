@@ -6,18 +6,20 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include "Math.cpp"
-constexpr auto INVENTORY_SIZE = 15U;
+#include "AssetHandler.h"
+#include <SFML/Graphics/Sprite.hpp>
+constexpr auto INVENTORY_SIZE = 37U;
 
 using namespace sf;
 
 class Item
 {
 public:
-	Item();
+	Item(AssetHandler* asset_handler);
 	virtual ~Item();
 	//Draws Items in the players inventory
-	static void DrawInventoryUI(RenderWindow& render_window, RenderStates render_states, Item& inv, unsigned int slot_type, unsigned int s_item);
-	static void DrawInventoryContents(RenderWindow& render_window, RenderStates render_states, Item& inv, unsigned int slot_type);
+	static void DrawInventoryUI(RenderWindow& render_window, RenderStates render_states, Item& inv, unsigned int slot_type, unsigned int s_item, bool inventory_open);
+	static void DrawInventoryContents(RenderWindow& render_window, RenderStates render_states, Item& inv, unsigned int slot_type, bool inventory_open);
 	//Draws Items used by the player
 	//Should not be called if item is not used
 	//Usage: Item::DrawInWorld(render_window, render_states, *item, Vector2f(..., ...));
@@ -67,6 +69,10 @@ private:
 	RectangleShape frame;
 	//Frame for drawing the inventory slots
 	RectangleShape inventory_frame;
+	Sprite inventory_sprite;
+	Sprite inventory_sprite_s;
+
+	AssetHandler* asset_handler;
 	//Textures for the items
 	Texture* textures[6];
 

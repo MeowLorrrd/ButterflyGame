@@ -1,18 +1,18 @@
 #include "Butterfly.h"
 
-Butterfly::Butterfly(bool first)
+Butterfly::Butterfly(AssetHandler* _ah)
 {
-	if (first)
-	{
-		std::string texture_path;
-		for (int i = 0u; i < sizeof(textures) / sizeof(*textures); i++)
-		{
-			texture_path = "Assets/Butterfly_" + std::to_string(i) + ".png";
-			textures[i] = new Texture();
-			if (!textures[i]->loadFromFile(texture_path))
-				printf("Could not load texture!\nMissing texture: [Butterfly_%i.png]", i);
-		}
-	}
+	std::string texture_path;
+	//for (int i = 0u; i < _textures->size(); i++)
+	//{
+	//	//texture_path = "Assets/Butterfly_" + std::to_string(i) + ".png";
+	//	//textures.resize(_textures.max_size());
+	//	textures.assign(0, _textures->at(i));
+	//	//textures[i] = std::unique_ptr<Texture>(&_textures.at(i));
+	//	//if (!textures[i]->loadFromFile(texture_path))
+	//	//	printf("Could not load texture!\nMissing texture: [Butterfly_%i.png]", i);
+	//}
+	asset_handler = _ah;
 	position = Vector2f();
 	is_active = false;
 	unique_id = 0;
@@ -29,11 +29,11 @@ Butterfly::Butterfly(bool first)
 
 Butterfly::~Butterfly()
 {
-	for (int i = 0u; i < sizeof(textures) / sizeof(*textures); i++)
+	//for (int i = 0u; i < sizeof(textures) / sizeof(*textures); i++)
 	{
-		delete textures[i];
+		//textures.clear();
 	}
-	delete[] & textures;
+	//delete[] & textures;
 }
 //Drawing all active Butterflies to screen
 void Butterfly::Draw(RenderWindow& render_target, RenderStates render_states, Butterfly& butterfly)
@@ -120,7 +120,7 @@ void Butterfly::Movement(float dt, Butterfly& butterfly)
 	butterfly.dirX = (butterfly.velocity.x > 0.0f) ? 1 : -1;
 	butterfly.frame.setPosition(butterfly.position);
 }
-int Butterfly::NewButterfly(Vector2f xy, unsigned short type, Butterfly* butterflies[BUTTERFLY_LIMIT])
+int Butterfly::NewButterfly(Vector2f xy, unsigned char type, Butterfly* butterflies[BUTTERFLY_LIMIT])
 {
 	int new_id = -1;
 	for (int i = 0u; i < BUTTERFLY_LIMIT; i++)
@@ -146,7 +146,7 @@ int Butterfly::NewButterfly(Vector2f xy, unsigned short type, Butterfly* butterf
 		butterflies[new_id]->dirX = 1;
 		butterflies[new_id]->dirY = 1;
 		butterflies[new_id]->alive_timer = 0;
-		butterflies[new_id]->frame.setTexture(butterflies[new_id]->textures[type]);
+		butterflies[new_id]->frame.setTexture(AssetHandler::GetTexture(butterflies[new_id]->asset_handler, AssetHandler::Butterflies, type));
 		butterflies[new_id]->current_frame = 0;
 		butterflies[new_id]->width = 12.f;
 		butterflies[new_id]->height = 36.f / 3.f;

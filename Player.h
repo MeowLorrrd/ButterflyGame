@@ -13,7 +13,7 @@ using namespace sf;
 class Player
 {
 public:
-	Player();
+	Player(AssetHandler* asset_handler);
 	virtual ~Player();
 	void Draw(RenderWindow& render_window, RenderStates render_states);
 	void Update(float deltaTime, Input* input);
@@ -44,13 +44,14 @@ private:
 
 	bool can_jump;
 
+	bool inventory_open;
+
 	Uint8 current_frame, animation_time;
 	Int8 direction = 1;
 	int selected_item_slot;
 
 	RectangleShape frame = RectangleShape();
 	IntRect texture_rectangle = IntRect();
-	Texture texture = Texture();
 	Item* items;
 
 	void Collision();

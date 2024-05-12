@@ -10,13 +10,14 @@ constexpr unsigned short BUTTERFLY_LIMIT = 30u;
 #include "Random.cpp"
 #include "Collision.cpp"
 #include "Player.h"
+#include <memory>
 
 using namespace sf;
 
 class Butterfly
 {
 public:
-	Butterfly(bool first_init);
+	Butterfly(AssetHandler* asset_handler);
 	virtual ~Butterfly();
 	bool is_active;
 	static void Draw(RenderWindow& render_target, RenderStates render_states, Butterfly& butterfly);
@@ -26,7 +27,7 @@ public:
 	//Example: 
 	//	int temp = NewButterfly(...);
 	//	Butterflies[temp]->... = ...;
-	static int NewButterfly(Vector2f start_pos, unsigned short type, Butterfly* butterflies[BUTTERFLY_LIMIT]);
+	static int NewButterfly(Vector2f start_pos, unsigned char type, Butterfly* butterflies[BUTTERFLY_LIMIT]);
 
 	//Let the game randomly spawn a butterfly
 	//'chance' sets the spawn chance, so chance = 60 would spawn every 60 frames on average
@@ -53,9 +54,10 @@ public:
 private:
 	Vector2f velocity, old_velocity;
 	Vector2f position;
-	Texture* textures[4]; // Access textures with Butterfly [TYPES]
+	std::vector<Texture> textures; // Access textures with Butterfly [TYPES]
 	RectangleShape frame; //Frame that is drawn to window
 	IntRect animated_frame; //Current frame that will be drawn
+	AssetHandler* asset_handler;
 
 	unsigned char type; //Type of butterfly
 	unsigned char item_type; //Item type that butterfly converts into
@@ -63,7 +65,7 @@ private:
 		alive_timer,
 		animation_timer;
 	unsigned char unique_id; //Ranges from 0 through 29. Only 1 number can be in use
-	
+
 	float custom_ai[2]; //Used for type-specific actions
 	float width; //Width of butterfly
 	float height; //Height of butterfly

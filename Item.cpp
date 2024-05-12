@@ -1,6 +1,6 @@
 #include "Item.h"
 
-Item::Item()
+Item::Item(AssetHandler* _ah)
 {
 	std::string asset_path;
 	for (int i = 0u; i < sizeof(textures) / sizeof(*textures); i++)
@@ -10,13 +10,12 @@ Item::Item()
 		if (!textures[i]->loadFromFile(asset_path))
 			printf("Could not load texture!\nMissing texture: [Item_%i.png]", i);
 	}
-	inv_texture = new Texture();
-	if (!inv_texture->loadFromFile("Assets/Inventory_Slot.png"))
-		printf("Could not load texture!\nMissing texture: [Inventory_Slot.png]");
-	inventory_frame.setTexture(inv_texture);
-	inv_texture_s = new Texture();
-	if (!inv_texture_s->loadFromFile("Assets/Inventory_Slot_Selected.png"))
-		printf("Could not load texture!\nMissing texture: [Inventory_Slot_Selected.png]");
+	asset_handler = _ah;
+
+	inventory_sprite.setTexture(*AssetHandler::GetTexture(_ah, AssetHandler::UI, AssetHandler::UITypes::InventorySlot));
+	inventory_sprite.setScale(Vector2f(2.5f, 2.5f));
+	inventory_sprite_s.setTexture(*AssetHandler::GetTexture(_ah, AssetHandler::UI, AssetHandler::UITypes::InventorySlotSelected));
+	inventory_sprite_s.setScale(Vector2f(2.51f, 2.51f));
 
 	type = COUNT;
 	item_use_delay = 0;
@@ -42,30 +41,38 @@ Item::~Item()
 	delete inv_texture_s;
 }
 
-void Item::DrawInventoryUI(RenderWindow& render_window, RenderStates render_states, Item& _inv, unsigned int slot_type, unsigned int s_item)
+void Item::DrawInventoryUI(RenderWindow& render_window, RenderStates render_states, Item& _inv, unsigned int slot_type, unsigned int s_item, bool full_ui)
 {
-	float x = 68.f * (slot_type % 5) + 24.f;
-	float y = 68.f * (slot_type % 3) + 24.f;
-	_inv.inventory_frame.setTexture(_inv.inv_texture);
-	_inv.inventory_frame.setSize(Vector2f(64.f, 64.f));
-	_inv.inventory_frame.setPosition(Vector2f(x, y));
-	render_window.draw(_inv.inventory_frame, render_states);
-	x = 68.f * static_cast<int>(s_item % 5) + 24.f;
-	y = 68.f * static_cast<int>(s_item / 5.f) + 24.f;
-	_inv.inventory_frame.setTexture(_inv.inv_texture_s);
-	_inv.inventory_frame.setPosition(Vector2f(x, y));
-	render_window.draw(_inv.inventory_frame, render_states);
+	float x = 84.f * (slot_type % 9) + 28.f;
+	float y = 84.f * (slot_type % 4) + 28.f;
+	_inv.inventory_sprite.setPosition(Vector2f(x, y));
+	if (slot_type % 4 == 0)
+	{
+		_inv.inventory_sprite.setColor(Color::Color(0, 175, 175));
+	}
+	if (full_ui)
+		render_window.draw(_inv.inventory_sprite, render_states);
+	else if (slot_type % 4 == 0)
+		render_window.draw(_inv.inventory_sprite, render_states);
+	x = 84.f * static_cast<int>(s_item % 9) + 28.f;
+	y = 84.f * static_cast<int>(s_item / 9.f) + 28.f;
+	_inv.inventory_sprite_s.setTexture(*AssetHandler::GetTexture(_inv.asset_handler, AssetHandler::UI, AssetHandler::UITypes::InventorySlotSelected));
+	_inv.inventory_sprite_s.setPosition(Vector2f(x, y));
+	render_window.draw(_inv.inventory_sprite_s, render_states);
 }
-void Item::DrawInventoryContents(RenderWindow& render_window, RenderStates render_states, Item& _inv, unsigned int slot_type)
+void Item::DrawInventoryContents(RenderWindow& render_window, RenderStates render_states, Item& _inv, unsigned int slot_type, bool full_ui)
 {
 	if (_inv.type >= 0 && _inv.type < COUNT)
 	{
 		_inv.frame.setTexture(_inv.textures[_inv.type]);
-		_inv.frame.setSize(Vector2f(44.f, 44.f));
-		float x = 68.f * static_cast<int>(slot_type % 5) + 34.f;
-		float y = 68.f * static_cast<int>(slot_type / 5.f) + 34.f;
+		_inv.frame.setSize(Vector2f(56.f, 56.f));
+		float x = 84.f * static_cast<int>(slot_type % 9) + 40.f;
+		float y = 84.f * static_cast<int>(slot_type / 9.f) + 40.f;
 		_inv.frame.setPosition(Vector2f(x, y));
-		render_window.draw(_inv.frame, render_states);
+		if (full_ui)
+			render_window.draw(_inv.frame, render_states);
+		else if (slot_type < 9)
+			render_window.draw(_inv.frame, render_states);
 	}
 }
 void Item::DrawInWorld(RenderWindow& render_window, RenderStates render_states, Item& _item, Vector2f xy)

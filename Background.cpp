@@ -10,7 +10,7 @@ Background::Background()
 	{
 		floor_textures[i] = new Texture();
 	}
-	if (!background_textures[CLOUDYDAY]->loadFromFile("Assets/Background_Normal_0.png"))
+	if (!background_textures[CLOUDYDAY]->loadFromFile("Assets/Background_0.png"))
 	{
 		printf("Could not load all Backgrounds!\n");
 	}
