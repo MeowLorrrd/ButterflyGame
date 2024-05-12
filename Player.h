@@ -21,11 +21,8 @@ public:
 
 	Item* inventory[INVENTORY_SIZE];
 	float width, height;
-	static Item* GetItem(Player& player);
 	static Vector2f GetItemPosition(Player& player);
-	static Vector2f GetItemSize(Player& player);
 	static bool GetCollision(Player& player, FloatRect other);
-	static Item* GetInventory(Player& player);
 	static void SetItem(Item* inventory[INVENTORY_SIZE], unsigned char item_type);
 private:
 	const float

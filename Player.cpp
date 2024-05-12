@@ -255,36 +255,18 @@ Vector2f Player::GetCenter()
 {
 	return Vector2f(position.x + width / 2.f, position.y + height / 2.f);
 }
-Item* Player::GetItem(Player& player)
-{
-	return player.items;
-}
 Vector2f Player::GetItemPosition(Player& player)
 {
-	Item* item = GetItem(player);
-	if (Item::ItemIsUsed(*item))
-		return Item::GetPosition(*item);
+	if (Item::ItemIsUsed(*player.items))
+		return Item::GetPosition(*player.items);
 	return Vector2f(-500.f, -500.f);
 }
 
-Vector2f Player::GetItemSize(Player& player)
-{
-	Item* item = GetItem(player);
-	if (Item::ItemIsUsed(*item))
-		return Item::GetSize(*item);
-	return Vector2f(0.0f, 0.0f);
-}
 bool Player::GetCollision(Player& p, FloatRect other)
 {
-	Item* item = GetItem(p);
-	if (Item::ItemIsUsed(*item))
-		return Item::GetCollision(*item, other);
+	if (Item::ItemIsUsed(*p.items))
+		return Item::GetCollision(*p.items, other);
 	return false;
-}
-
-Item* Player::GetInventory(Player& player)
-{
-	return *player.inventory;
 }
 
 void Player::SetItem(Item* inventory[INVENTORY_SIZE], unsigned char item_type)
