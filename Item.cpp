@@ -151,3 +151,8 @@ bool Item::GetCollision(Item& item, FloatRect other)
 {
 	return item.frame.getGlobalBounds().intersects(other);
 }
+
+bool Item::ItemIsUsed(Item& item)
+{
+	return item.item_use_delay > 0;
+}

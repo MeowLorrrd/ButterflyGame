@@ -51,10 +51,7 @@ public:
 	unsigned int stack;
 	//Maximum stack size of inventory slot
 	unsigned int max_stack;
-	//How quick another item can be used
-	//Value is in frames, so item_use_delay = 60 would be 1 second
-	//A value of 0 means that the item is not in use
-	unsigned char item_use_delay;
+	
 	//Used for flipping the sprite horizontally
 	//Value should either be 1 or -1
 	signed char dirX;
@@ -63,6 +60,7 @@ public:
 	//Returns size of item, with scale factored in
 	static Vector2f GetSize(Item& item);
 	static bool GetCollision(Item& item, FloatRect other);
+	static bool ItemIsUsed(Item& item);
 
 private:
 	//Frame for drawing items in the inventory and in the world (if active)
@@ -98,5 +96,10 @@ private:
 	float width;
 	float height;
 	float scale;
+
+	//How quick another item can be used
+	//Value is in frames, so item_use_delay = 60 would be 1 second
+	//A value of 0 means that the item is not in use
+	unsigned char item_use_delay;
 };
 #endif

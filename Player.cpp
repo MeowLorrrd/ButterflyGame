@@ -49,7 +49,7 @@ void Player::Draw(RenderWindow& render_target, RenderStates render_states)
 	{
 		Item::DrawInventoryContents(render_target, render_states, *inventory[i], i, inventory_open);
 	}
-	if (items->item_use_delay > 0)
+	if (Item::ItemIsUsed(*items))
 		Item::DrawInWorld(render_target, render_states, *items, GetCenter());
 #pragma endregion
 }
@@ -181,14 +181,12 @@ void Player::UseItem(Input* input)
 	{
 		selected_item_slot = 0;
 	}
-	printf("\n%i", selected_item_slot);
 	if (input->HasPressedKey(Keyboard::E))
 		inventory_open = !inventory_open;
 	if (input->HasPressedMouse(Mouse::Left))
 	{
-		if (items->item_use_delay > 0)//Can't use item if an item already exists
-			return;
-		Item::NewItem(GetCenter(), (Uint8)inventory[selected_item_slot]->type, *items);
+		if (!Item::ItemIsUsed(*items))//Can't use item if an item already exists
+			Item::NewItem(GetCenter(), (Uint8)inventory[selected_item_slot]->type, *items);
 	}
 }
 void Player::Collision()
@@ -223,7 +221,7 @@ void Player::SetFrame()
 		current_frame = 1;
 	}
 
-	else if (items->item_use_delay > 0)
+	else if (Item::ItemIsUsed(*items))
 	{
 		current_frame = 4;
 	}
@@ -246,7 +244,7 @@ void Player::Update(float deltaTime, Input* input)
 	UseItem(input);
 	Collision();
 	SetFrame();
-	if (items->item_use_delay > 0)
+	if (Item::ItemIsUsed(*items))
 	{
 		Item::Update(deltaTime, *items, GetCenter());
 		items->dirX = this->direction;
@@ -264,7 +262,7 @@ Item* Player::GetItem(Player& player)
 Vector2f Player::GetItemPosition(Player& player)
 {
 	Item* item = GetItem(player);
-	if (item->item_use_delay > 0)
+	if (Item::ItemIsUsed(*item))
 		return Item::GetPosition(*item);
 	return Vector2f(-500.f, -500.f);
 }
@@ -272,14 +270,14 @@ Vector2f Player::GetItemPosition(Player& player)
 Vector2f Player::GetItemSize(Player& player)
 {
 	Item* item = GetItem(player);
-	if (item->item_use_delay > 0)
+	if (Item::ItemIsUsed(*item))
 		return Item::GetSize(*item);
 	return Vector2f(0.0f, 0.0f);
 }
 bool Player::GetCollision(Player& p, FloatRect other)
 {
 	Item* item = GetItem(p);
-	if (item->item_use_delay > 0)
+	if (Item::ItemIsUsed(*item))
 		return Item::GetCollision(*item, other);
 	return false;
 }
