@@ -27,3 +27,13 @@ Items:
 	Basic Bug net, swing it around to catch butterflies
 	Net bomb, it currently does nothing (and is unobtainable), but throwing it should catch butterflies in an area
 	Butterflies, you can collect them or release them into the world
+
+Building the game:
+	Open the *.sln file and build through Visual Studio.
+	You might need to copy-paste some sfml-*.dll files, they're found in:
+		include\SFML-2.6.1\bin
+	Files with -d- in their name are for debugging builds. Example
+		sfml-audio-d-2.dll
+	is for debugging
+	
+	Assets should automatically be copied into the build directory on build
