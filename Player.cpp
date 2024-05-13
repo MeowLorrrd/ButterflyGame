@@ -158,15 +158,8 @@ void Player::UseItem(Input* input, Butterfly* _gb[BUTTERFLY_LIMIT])
 		Item::TurnItemToNewType(*inventory[14], 1);
 	}
 #endif
-	if (input->HasPressedKey(Keyboard::Up))
-	{
-		selected_item_slot -= 9;
-	}
-	else if (input->HasPressedKey(Keyboard::Down))
-	{
-		selected_item_slot += 9;
-	}
-	else if (input->HasPressedKey(Keyboard::Left))
+#pragma region  ugly input stuff
+	if (input->HasPressedKey(Keyboard::Left))
 	{
 		selected_item_slot--;
 	}
@@ -174,14 +167,45 @@ void Player::UseItem(Input* input, Butterfly* _gb[BUTTERFLY_LIMIT])
 	{
 		selected_item_slot++;
 	}
-	if (selected_item_slot > 8)
-	{
-		selected_item_slot = 8;
-	}
-	else if (selected_item_slot < 0)
+	if (input->HasPressedKey(Keyboard::Num1))
 	{
 		selected_item_slot = 0;
 	}
+	else if (input->HasPressedKey(Keyboard::Num2))
+	{
+		selected_item_slot = 1;
+	}
+	else if (input->HasPressedKey(Keyboard::Num3))
+	{
+		selected_item_slot = 2;
+	}
+	else if (input->HasPressedKey(Keyboard::Num4))
+	{
+		selected_item_slot = 3;
+	}
+	else if (input->HasPressedKey(Keyboard::Num5))
+	{
+		selected_item_slot = 4;
+	}
+	else if (input->HasPressedKey(Keyboard::Num6))
+	{
+		selected_item_slot = 5;
+	}
+	else if (input->HasPressedKey(Keyboard::Num7))
+	{
+		selected_item_slot = 6;
+	}
+	else if (input->HasPressedKey(Keyboard::Num8))
+	{
+		selected_item_slot = 7;
+	}
+	else if (input->HasPressedKey(Keyboard::Num9))
+	{
+		selected_item_slot = 8;
+	}
+#pragma endregion
+
+	selected_item_slot = Math::Clamp(selected_item_slot, 0, 8);
 	if (input->HasPressedKey(Keyboard::E))
 		inventory_open = !inventory_open;
 	if (input->HasPressedMouse(Mouse::Left) && !Item::ItemIsUsed(*items))
