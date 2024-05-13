@@ -94,7 +94,7 @@ void Player::Movement(Input* input)
 	position += velocity;//* deltaTime;
 
 }
-void Player::UseItem(Input* input)
+void Player::UseItem(Input* input, Butterfly* _gb[BUTTERFLY_LIMIT])
 {
 #ifndef DEBUG
 	if (input->HasPressedKey(Keyboard::Numpad0))
@@ -184,11 +184,19 @@ void Player::UseItem(Input* input)
 	}
 	if (input->HasPressedKey(Keyboard::E))
 		inventory_open = !inventory_open;
-	if (input->HasPressedMouse(Mouse::Left))
+	if (input->HasPressedMouse(Mouse::Left) && !Item::ItemIsUsed(*items))
 	{
-		if (!Item::ItemIsUsed(*items))//Can't use item if an item already exists
-			Item::NewItem(GetCenter(), (Uint8)inventory[selected_item_slot]->type, *items);
+		if (inventory[selected_item_slot]->type >= Item::ButterflyMonarch && inventory[selected_item_slot]->type <= Item::ButterflyGlass)
+		{
+			Butterfly::NewButterfly(GetCenter(), inventory[selected_item_slot]->type - 2, _gb);
+			Item::ReduceStackSize(*inventory[selected_item_slot], 1);
+		}
+		else
+		{
+			Item::NewItem(GetCenter(), inventory[selected_item_slot]->type, *items);
+		}
 	}
+	printf("slot:\t%i\ntype:\t%i\n", selected_item_slot, items->type);
 }
 void Player::Collision()
 {
@@ -239,10 +247,10 @@ void Player::SetFrame()
 	animation_time = Math::ResetValue<int>(animation_time, 0, (int)(height * TOTAL_FRAMES));
 }
 
-void Player::Update(float deltaTime, Input* input)
+void Player::Update(float deltaTime, Input* input, Butterfly* _gb[BUTTERFLY_LIMIT])
 {
 	Movement(input);
-	UseItem(input);
+	UseItem(input, _gb);
 	Collision();
 	SetFrame();
 	if (Item::ItemIsUsed(*items))

@@ -109,6 +109,8 @@ void Item::Update(float deltaTime, Item& _item, Vector2f xy)
 }
 void Item::NewItem(Vector2f xy, Uint8 _type, Item& _item)
 {
+	if (!(_type >= 0 && _type < COUNT))
+		return;
 	_item.type = _type;
 	_item.position = xy;
 	_item.rotation = -40.0f;
@@ -127,7 +129,10 @@ void Item::NewItem(Vector2f xy, Uint8 _type, Item& _item)
 	case NetBomb:
 		break;
 	case ButterflyMonarch:
-		//spawn butterfly manually
+	case ButterflyGolden:
+	case ButterflyNebula:
+	case ButterflyGlass:
+		_item.item_use_delay = 10;
 		break;
 	};
 }
@@ -156,4 +161,11 @@ bool Item::GetCollision(Item& item, FloatRect other)
 bool Item::ItemIsUsed(Item& item)
 {
 	return item.item_use_delay > 0;
+}
+
+void Item::ReduceStackSize(Item& item, unsigned int reduce_size)
+{
+	item.stack -= reduce_size;
+	if (item.stack < 1)
+		item.type = COUNT;
 }

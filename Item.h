@@ -4,7 +4,6 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
-#include <SFML/Window/Keyboard.hpp>
 #include "Math.cpp"
 #include "AssetHandler.h"
 #include <SFML/Graphics/Sprite.hpp>
@@ -64,6 +63,7 @@ public:
 	static Vector2f GetSize(Item& item);
 	static bool GetCollision(Item& item, FloatRect other);
 	static bool ItemIsUsed(Item& item);
+	static void ReduceStackSize(Item& item, unsigned int reduce_size);
 
 private:
 	//Frame for drawing items in the inventory and in the world (if active)

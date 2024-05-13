@@ -3,10 +3,10 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
-#include <SFML/Window/Keyboard.hpp>
 #include "Math.cpp"
 #include "Item.h"
 #include "Input.h"
+#include "Butterfly.h"
 
 using namespace sf;
 
@@ -16,7 +16,7 @@ public:
 	Player(AssetHandler* asset_handler);
 	virtual ~Player();
 	void Draw(RenderWindow& render_window, RenderStates render_states);
-	void Update(float deltaTime, Input* input);
+	void Update(float deltaTime, Input* input, Butterfly* game_butterflies[BUTTERFLY_LIMIT]);
 	Vector2f GetCenter();
 
 	Item* inventory[INVENTORY_SIZE];
@@ -52,7 +52,7 @@ private:
 	Item* items;
 
 	void Collision();
-	void UseItem(Input* input);
+	void UseItem(Input* input, Butterfly* game_butterflies[BUTTERFLY_LIMIT]);
 	void SetFrame();
 	void Movement(Input* input);
 };

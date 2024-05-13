@@ -9,8 +9,7 @@ constexpr unsigned short BUTTERFLY_LIMIT = 30u;
 #include "Math.cpp"
 #include "Random.cpp"
 #include "Collision.cpp"
-#include "Player.h"
-#include <memory>
+#include "AssetHandler.h"
 
 using namespace sf;
 

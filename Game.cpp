@@ -29,7 +29,7 @@ void Game::SetupGameWindow()
 void Game::Update(float _deltaTime)
 {
 	UpdateInput();
-	my_player->Update(_deltaTime, &input);
+	my_player->Update(_deltaTime, &input, butterflies);
 	for (int i = 0u; i < BUTTERFLY_LIMIT; i++)
 	{
 		if (!butterflies[i]->is_active)
@@ -43,7 +43,7 @@ void Game::Update(float _deltaTime)
 			Butterfly::KillButterfly(butterflies, i);
 		}
 	}
-	Butterfly::SpawnButterflyNatural(1, butterflies);
+	Butterfly::SpawnButterflyNatural(60, butterflies);
 }
 void Game::UpdateInput()
 {
