@@ -46,7 +46,7 @@ void Game::Update(float _deltaTime)
 			Butterfly::KillButterfly(butterflies, i);
 		}
 	}
-	Butterfly::SpawnButterflyNatural(60, butterflies);
+	Butterfly::SpawnButterflyNatural(240, butterflies);
 }
 void Game::UpdateInput()
 {
