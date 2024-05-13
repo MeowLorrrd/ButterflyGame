@@ -32,8 +32,10 @@ Building the game:
 	Open the *.sln file and build through Visual Studio.
 	You might need to copy-paste some sfml-*.dll files, they're found in:
 		include\SFML-2.6.1\bin
-	Files with -d- in their name are for debugging builds. Example
+	Filenames with -d- are for debugging builds. For example
 		sfml-audio-d-2.dll
 	is for debugging
+	Other *.dll files are for release builds
 	
 	Assets should automatically be copied into the build directory on build
+	If not, copy and paste Assets\ to the build dir
