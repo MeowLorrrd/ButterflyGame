@@ -35,6 +35,7 @@ void Player::Draw(RenderWindow& render_target, RenderStates render_states)
 {
 	window_borders = render_target.getSize();
 #pragma region PLAYER
+	SetFrame();
 	texture_rectangle.top = current_frame * (int)(height);//Setting frame of 'animation'
 	frame.setScale(Vector2f(2.f * (float)direction, 2.f));//Flipping sprite
 	frame.setTextureRect(texture_rectangle);
@@ -194,7 +195,7 @@ void Player::SetFrame()
 	}
 	else if (velocity.x != 0.0f)
 	{
-		animation_time += 3;
+		animation_time += 7;
 		current_frame = (animation_time % (int)(height * TOTAL_FRAMES) < height * TOTAL_FRAMES / 2.0f) ? 2 : 3;
 	}
 	else
@@ -214,7 +215,6 @@ void Player::Update(float deltaTime, Input* input, Butterfly* _gb[BUTTERFLY_LIMI
 	Movement(input);
 	UseItem(input, _gb);
 	Collision();
-	SetFrame();
 	if (Item::ItemIsUsed(*items))
 	{
 		Item::Update(deltaTime, *items, GetCenter());
