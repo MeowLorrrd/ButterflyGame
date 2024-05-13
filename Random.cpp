@@ -21,6 +21,11 @@ namespace Random
 		chance = Math::Max(chance, 0); //Making sure that 'chance' can never be lower than zero
 		return std::rand() % chance == 0;
 	}
+	template<typename T>
+	static T Pick(T first, T second)
+	{
+		return (std::rand() % 2 == 0 ? first : second);
+	}
 	/*
 	static int NextOfArray(int value[])
 	{
