@@ -91,7 +91,7 @@ void Butterfly::Movement(float dt, Butterfly& butterfly)
 		if (butterfly.custom_ai[0] >= idle_time || butterfly.alive_timer == 1)
 		{
 			butterfly.newX = (float)Random::NextInt(10, 1590);
-			butterfly.newY = (float)Random::NextInt(725, 790);
+			butterfly.newY = (float)Random::NextInt(725, 750);
 			butterfly.custom_ai[0] = 0.0f;
 		}
 		else if (Math::Vec2Distance(butterfly.GetCenter(butterfly), Vector2f(butterfly.newX, butterfly.newY)) < 200.f)
@@ -101,7 +101,7 @@ void Butterfly::Movement(float dt, Butterfly& butterfly)
 		if (Math::Vec2Distance(butterfly.GetCenter(butterfly), Vector2f(butterfly.newX, butterfly.newY)) > 200.f && Math::Vec2Length(butterfly.velocity) < 240.f)
 		{
 			butterfly.velocity.x += 3.2f * (butterfly.newX > butterfly.GetCenter(butterfly).x ? 1 : -1);
-			butterfly.velocity.y += 2.5f * (butterfly.newY > butterfly.GetCenter(butterfly).y ? 1 : -1);
+			butterfly.velocity.y += 2.0f * (butterfly.newY > butterfly.GetCenter(butterfly).y ? 1 : -1);
 			//butterfly.animation_timer_speed += 0.2f;
 		}
 		else
@@ -114,6 +114,11 @@ void Butterfly::Movement(float dt, Butterfly& butterfly)
 	butterfly.position += butterfly.velocity * dt;
 	butterfly.rotation = butterfly.velocity.x * 0.075f;
 	butterfly.dirX = (butterfly.velocity.x > 0.0f) ? 1 : -1;
+	if (butterfly.position.y + butterfly.height > 825)//STOP TOUCHING THE FLOOR please and thank you
+	{
+		butterfly.velocity.y *= -1;
+		butterfly.position.y = 825 - butterfly.height;
+	}
 	butterfly.frame.setPosition(butterfly.position);
 }
 int Butterfly::NewButterfly(Vector2f xy, unsigned char type, Butterfly* butterflies[BUTTERFLY_LIMIT])
