@@ -11,7 +11,7 @@ Player::Player(AssetHandler* _ah)
 	frame.setOrigin(Vector2f(
 		width / 2.0f,
 		height / 2.0f));
-	frame.setPosition(Vector2f(position));
+	frame.setPosition(position);
 	frame.setTexture(AssetHandler::GetTexture(_ah, AssetHandler::Player, 0));
 	frame.setTextureRect(texture_rectangle);
 
@@ -24,6 +24,7 @@ Player::Player(AssetHandler* _ah)
 	selected_item_slot = 0;
 	can_jump = false;
 	inventory_open = false;
+	window_borders = Vector2u(1600, 900);//Manually setting it bc window does not resize
 }
 Player::~Player()
 {
