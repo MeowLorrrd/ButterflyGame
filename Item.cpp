@@ -21,6 +21,7 @@ Item::Item(AssetHandler* _ah)
 	scale = 0.0f;
 	stack = 0;
 	max_stack = 1;
+	inventory_stack_text.setFont(*AssetHandler::GetFont(asset_handler));
 }
 Item::~Item()
 {
@@ -55,10 +56,24 @@ void Item::DrawInventoryContents(RenderWindow& render_window, RenderStates rende
 		float x = 84.f * static_cast<int>(slot_type % 9) + 40.f;
 		float y = 84.f * static_cast<int>(slot_type / 9.f) + 40.f;
 		_inv.frame.setPosition(Vector2f(x, y));
+		if (_inv.max_stack != 1)
+		{
+			std::string stacksize = std::to_string(_inv.stack);
+			_inv.inventory_stack_text.setString(stacksize);
+			_inv.inventory_stack_text.setCharacterSize(36u);
+			_inv.inventory_stack_text.setPosition(x + 24.0f, y + 18.0f);
+		}
 		if (full_ui)
+		{
 			render_window.draw(_inv.frame, render_states);
+			render_window.draw(_inv.inventory_stack_text, render_states);
+		}
+
 		else if (slot_type < 9)
+		{
 			render_window.draw(_inv.frame, render_states);
+			render_window.draw(_inv.inventory_stack_text, render_states);
+		}
 	}
 }
 void Item::DrawInWorld(RenderWindow& render_window, RenderStates render_states, Item& _item, Vector2f xy)

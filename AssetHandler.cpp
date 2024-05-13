@@ -121,3 +121,8 @@ Texture* AssetHandler::GetTexture(AssetHandler* instance, int type, int _st = 0)
 	}
 	return new Texture();
 }
+
+Font* AssetHandler::GetFont(AssetHandler* instance)
+{
+	return instance->font;
+}

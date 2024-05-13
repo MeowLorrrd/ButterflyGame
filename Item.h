@@ -70,6 +70,7 @@ private:
 	RectangleShape frame;
 	Sprite inventory_sprite;
 	Sprite inventory_sprite_s;
+	Text inventory_stack_text;
 
 	AssetHandler* asset_handler;
 
