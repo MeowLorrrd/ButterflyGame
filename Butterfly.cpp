@@ -78,14 +78,6 @@ void Butterfly::Movement(float dt, Butterfly& butterfly)
 	//Timer for idle butterflies, they continue roaming if timer reaches limit
 	float idle_time = 6.f * 60.f;
 
-	if (butterfly.unique_id == 0)
-	{
-		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-		butterfly.frame.setOutlineColor(Color::Color(255, 0, 0, 255));			//
-		butterfly.frame.setOutlineThickness(2.f);								//
-		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-	}
-
 	switch (butterfly.type)
 	{
 	case Monarch:
@@ -96,7 +88,7 @@ void Butterfly::Movement(float dt, Butterfly& butterfly)
 		if (butterfly.custom_ai[0] >= idle_time || butterfly.alive_timer == 1)
 		{
 			butterfly.newX = (float)Random::NextInt(10, 1590);
-			butterfly.newY = (float)Random::NextInt(750, 800);
+			butterfly.newY = (float)Random::NextInt(700, 750);
 			butterfly.custom_ai[0] = 0.0f;
 		}
 		else if (Math::Vec2Distance(butterfly.GetCenter(butterfly), Vector2f(butterfly.newX, butterfly.newY)) < 200.f)
@@ -106,7 +98,7 @@ void Butterfly::Movement(float dt, Butterfly& butterfly)
 		if (Math::Vec2Distance(butterfly.GetCenter(butterfly), Vector2f(butterfly.newX, butterfly.newY)) > 200.f && Math::Vec2Length(butterfly.velocity) < 240.f)
 		{
 			butterfly.velocity.x += 3.2f * (butterfly.newX > butterfly.GetCenter(butterfly).x ? 1 : -1);
-			butterfly.velocity.y += 1.5f * (butterfly.newY > butterfly.GetCenter(butterfly).y ? 1 : -1);
+			butterfly.velocity.y += 2.5f * (butterfly.newY > butterfly.GetCenter(butterfly).y ? 1 : -1);
 			//butterfly.animation_timer_speed += 0.2f;
 		}
 		else
@@ -117,6 +109,7 @@ void Butterfly::Movement(float dt, Butterfly& butterfly)
 		break;
 	}
 	butterfly.position += butterfly.velocity * dt;
+	butterfly.rotation = butterfly.velocity.x * 0.075f;
 	butterfly.dirX = (butterfly.velocity.x > 0.0f) ? 1 : -1;
 	butterfly.frame.setPosition(butterfly.position);
 }
@@ -204,20 +197,6 @@ void Butterfly::KillButterfly(Butterfly* butterflies[BUTTERFLY_LIMIT], unsigned 
 {
 	butterflies[_id]->type = Butterfly::TYPES::COUNT;
 	butterflies[_id]->is_active = false;
-
-	/*Butterfly* _butterfly[BUTTERFLY_LIMIT]{};
-	for (int i = 0u; i < BUTTERFLY_LIMIT; i++)
-	{
-		_butterfly[i] = butterflies[i];
-	}
-
-	for (int i = _id + 1; i < BUTTERFLY_LIMIT; i++)
-	{
-		if (!_butterfly[i]->is_active)
-			return;
-		butterflies[_id] = _butterfly[i];
-	}*/
-
 }
 Vector2f Butterfly::GetCenter(Butterfly& butterfly)
 {

@@ -196,7 +196,6 @@ void Player::UseItem(Input* input, Butterfly* _gb[BUTTERFLY_LIMIT])
 			Item::NewItem(GetCenter(), inventory[selected_item_slot]->type, *items);
 		}
 	}
-	printf("slot:\t%i\ntype:\t%i\n", selected_item_slot, items->type);
 }
 void Player::Collision()
 {
