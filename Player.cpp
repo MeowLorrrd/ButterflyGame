@@ -20,6 +20,7 @@ Player::Player(AssetHandler* _ah)
 	{
 		inventory[i] = new Item(_ah);
 	}
+	Item::TurnItemToNewType(*inventory[0], 0);
 	selected_item_slot = 0;
 	can_jump = false;
 	inventory_open = false;
