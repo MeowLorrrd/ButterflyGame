@@ -38,8 +38,11 @@ Butterfly::~Butterfly()
 //Drawing all active Butterflies to screen
 void Butterfly::Draw(RenderWindow& render_target, RenderStates render_states, Butterfly& butterfly)
 {
-	butterfly.UpdateFrame(butterfly);
-	render_target.draw(butterfly.frame, render_states);
+	if (butterfly.alive_timer > 0)
+	{
+		butterfly.UpdateFrame(butterfly);
+		render_target.draw(butterfly.frame, render_states);
+	}
 }
 void Butterfly::UpdateFrame(Butterfly& butterfly)
 {
