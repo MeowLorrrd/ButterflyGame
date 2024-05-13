@@ -42,12 +42,12 @@ public:
 	Uint8 type;
 	const enum Types
 	{
-		BASICBUGNET = 0,
-		NETBOMB = 1,
-		BUTTERFLYMONARCH = 2,
-		BUTTERFLYGOLDEN = 3,
-		BUTTERFLYNEBULA = 4,
-		BUTTERFLYGLASS = 5,
+		BasicBugnet = 0,
+		NetBomb = 1,
+		ButterflyMonarch = 2,
+		ButterflyGolden = 3,
+		ButterflyNebula = 4,
+		ButterflyGlass = 5,
 		COUNT = 6 //Amount of current items
 	};
 	//Current stack size of inventory slot
@@ -82,8 +82,8 @@ private:
 	Uint8 item_use_type;
 	const enum USETYPES
 	{
-		SWING = 0,
-		THROWN = 1
+		Swing = 0,
+		Thrown = 1
 	};
 
 	//Rotating the sprite

@@ -100,9 +100,9 @@ void Item::Update(float deltaTime, Item& _item, Vector2f xy)
 		xy.x - _item.item_use_offset.x :
 		xy.x - _item.item_use_offset.x * 2.f,
 		xy.y - _item.item_use_offset.y);
-	switch (_item.type)
+	switch (_item.item_use_type)
 	{
-	case BASICBUGNET:
+	case Swing:
 		_item.rotation = (360.f * sin(-(float)_item.item_use_delay / 90.f) + 90.f) * (float)_item.dirX;
 		break;
 	}
@@ -115,7 +115,7 @@ void Item::NewItem(Vector2f xy, Uint8 _type, Item& _item)
 	_item.frame.setTexture(AssetHandler::GetTexture(_item.asset_handler, AssetHandler::Items, _item.type));
 	switch (_item.type)
 	{
-	case BASICBUGNET:
+	case BasicBugnet:
 		_item.item_use_delay = 30;
 		_item.item_use_offset = Vector2f(8.5f, 44.f);
 		_item.width = 64.f;
@@ -124,9 +124,9 @@ void Item::NewItem(Vector2f xy, Uint8 _type, Item& _item)
 		_item.frame.setOrigin(Vector2f(0.f, _item.height));
 		_item.frame.setSize(Vector2f(_item.width, _item.height));
 		break;
-	case NETBOMB:
+	case NetBomb:
 		break;
-	case BUTTERFLYMONARCH:
+	case ButterflyMonarch:
 		//spawn butterfly manually
 		break;
 	};
@@ -134,7 +134,7 @@ void Item::NewItem(Vector2f xy, Uint8 _type, Item& _item)
 void Item::TurnItemToNewType(Item& old, unsigned short new_type)
 {
 	old.type = (new_type < COUNT) ? new_type : 0;
-	if (old.type >= Item::BUTTERFLYMONARCH && old.type <= Item::BUTTERFLYGLASS) old.max_stack = 30;
+	if (old.type >= Item::ButterflyMonarch && old.type <= Item::ButterflyGlass) old.max_stack = 30;
 	old.frame.setTexture(AssetHandler::GetTexture(old.asset_handler, AssetHandler::Items, old.type));
 }
 

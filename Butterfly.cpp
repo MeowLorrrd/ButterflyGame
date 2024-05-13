@@ -45,10 +45,10 @@ void Butterfly::UpdateFrame(Butterfly& butterfly)
 {
 	switch (butterfly.type)
 	{
-	case MONARCH:
-	case GOLDEN:
-	case NEBULA:
-	case GLASSWING:
+	case Monarch:
+	case Golden:
+	case Nebula:
+	case Glasswing:
 		butterfly.animation_timer = Math::ResetValue<int>(butterfly.animation_timer + 1, 0, 9);
 		if (butterfly.animation_timer > 8)
 		{
@@ -88,10 +88,10 @@ void Butterfly::Movement(float dt, Butterfly& butterfly)
 
 	switch (butterfly.type)
 	{
-	case MONARCH:
-	case GOLDEN:
-	case NEBULA:
-	case GLASSWING:
+	case Monarch:
+	case Golden:
+	case Nebula:
+	case Glasswing:
 		idle_time = Random::NextInt(6, 11) * 60.f;
 		if (butterfly.custom_ai[0] >= idle_time || butterfly.alive_timer == 1)
 		{
@@ -154,17 +154,17 @@ int Butterfly::NewButterfly(Vector2f xy, unsigned char type, Butterfly* butterfl
 
 		switch (butterflies[new_id]->type)
 		{
-		case MONARCH:
+		case Monarch:
 			butterflies[new_id]->item_type = 2;
 			break;
-		case GOLDEN:
+		case Golden:
 			butterflies[new_id]->scale = 1.f + (Random::NextInt(50, 175) / 100.f);
 			butterflies[new_id]->item_type = 3;
 			break;
-		case NEBULA:
+		case Nebula:
 			butterflies[new_id]->item_type = 4;
 			break;
-		case GLASSWING:
+		case Glasswing:
 			butterflies[new_id]->item_type = 5;
 			break;
 		}
@@ -191,13 +191,13 @@ void Butterfly::SpawnButterflyNatural(int chance, Butterfly* butterflies[BUTTERF
 	if (Random::NextBool(chance))
 	{
 		if (Random::NextBool(50))
-			NewButterfly(Vector2f(-100.f, 500.f), GOLDEN, butterflies);
+			NewButterfly(Vector2f(-100.f, 500.f), Golden, butterflies);
 		else if (Random::NextBool(3))
-			NewButterfly(Vector2f(-100.f, 500.f), MONARCH, butterflies);
+			NewButterfly(Vector2f(-100.f, 500.f), Monarch, butterflies);
 		else if (Random::NextBool(2))
-			NewButterfly(Vector2f(-100.f, 500.f), NEBULA, butterflies);
+			NewButterfly(Vector2f(-100.f, 500.f), Nebula, butterflies);
 		else
-			NewButterfly(Vector2f(-100.f, 500.f), GLASSWING, butterflies);
+			NewButterfly(Vector2f(-100.f, 500.f), Glasswing, butterflies);
 	}
 }
 void Butterfly::KillButterfly(Butterfly* butterflies[BUTTERFLY_LIMIT], unsigned char _id)

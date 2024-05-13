@@ -37,10 +37,10 @@ public:
 	//Types of butterflies
 	const enum TYPES
 	{
-		MONARCH = 0,
-		GOLDEN = 1,
-		NEBULA = 2,
-		GLASSWING = 3,
+		Monarch = 0,
+		Golden = 1,
+		Nebula = 2,
+		Glasswing = 3,
 		COUNT = 4
 	};
 	//Returns center of the butterfly

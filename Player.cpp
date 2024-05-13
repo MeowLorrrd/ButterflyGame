@@ -20,7 +20,7 @@ Player::Player(AssetHandler* _ah)
 	{
 		inventory[i] = new Item(_ah);
 	}
-	Item::TurnItemToNewType(*inventory[0], 0);
+	Item::TurnItemToNewType(*inventory[0], Item::BasicBugnet);
 	selected_item_slot = 0;
 	can_jump = false;
 	inventory_open = false;
@@ -272,21 +272,21 @@ bool Player::GetCollision(Player& p, FloatRect other)
 
 void Player::SetItem(Item* inventory[INVENTORY_SIZE], unsigned char item_type)
 {
-	if (item_type >= Item::Types::COUNT)
+	if (item_type >= Item::COUNT)
 	{
 		printf("Tried setting unexisting item!\n");
 		return;
 	}
 	for (int i = 0u; i < INVENTORY_SIZE; i++)
 	{
-		if (inventory[i]->type >= Item::Types::BUTTERFLYMONARCH && inventory[i]->type <= Item::Types::BUTTERFLYGLASS)
+		if (inventory[i]->type >= Item::ButterflyMonarch && inventory[i]->type <= Item::ButterflyGlass)
 			inventory[i]->max_stack = 30;
 		if (inventory[i]->type == item_type && inventory[i]->stack < inventory[i]->max_stack)
 		{
 			inventory[i]->stack++;
 			return;
 		}
-		if (inventory[i]->type == Item::Types::COUNT)
+		if (inventory[i]->type == Item::COUNT)
 		{
 			inventory[i]->type = item_type;
 			inventory[i]->stack = 1;
