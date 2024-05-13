@@ -186,16 +186,19 @@ void Butterfly::SpawnButterflyNatural(int chance, Butterfly* butterflies[BUTTERF
 	if (chance < 1) return; // Disable spawning
 	if (Random::NextBool(chance))
 	{
-		float spawnX = Random::Pick<float>(-100.0f, 1700.0f);
+		float spawnX = Random::Pick<float>(static_cast<float>(Random::NextInt(-100.0f, -25.0f)), static_cast<float>(Random::NextInt(1700.0f, 1800.0f)));
 		float spawnY = static_cast<float>(Random::NextInt(400, 550));
 		if (Random::NextBool(50))
+		{
 			NewButterfly(Vector2f(spawnX, spawnY), Golden, butterflies);
-		else if (Random::NextBool(3))
-			NewButterfly(Vector2f(spawnX, spawnY), Monarch, butterflies);
-		else if (Random::NextBool(2))
+			return;
+		}
+		if (Random::NextBool(10))
 			NewButterfly(Vector2f(spawnX, spawnY), Nebula, butterflies);
-		else
+		if (Random::NextBool(10))
 			NewButterfly(Vector2f(spawnX, spawnY), Glasswing, butterflies);
+		else
+			NewButterfly(Vector2f(spawnX, spawnY), Monarch, butterflies);
 	}
 }
 void Butterfly::KillButterfly(Butterfly* butterflies[BUTTERFLY_LIMIT], unsigned char _id)
