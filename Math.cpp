@@ -10,7 +10,8 @@ namespace Math
 	}
 	//"Clamps" a value between a minimum and maximum value
 	//The value will never go over the limited values
-	static float Clamp(float value, float minvalue, float maxvalue)
+	template <typename T>
+	static T Clamp(T value, T minvalue, T maxvalue)
 	{
 		return (value < minvalue) ? minvalue : ((value > maxvalue) ? maxvalue : value);
 	}

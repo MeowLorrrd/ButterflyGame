@@ -186,10 +186,8 @@ void Butterfly::SpawnButterflyNatural(int chance, Butterfly* butterflies[BUTTERF
 	if (chance < 1) return; // Disable spawning
 	if (Random::NextBool(chance))
 	{
-		int d = -100;
 		float spawnX = Random::Pick<float>(static_cast<float>(Random::NextInt(-100, -25)), static_cast<float>(Random::NextInt(1700, 1800)));
 		float spawnY = static_cast<float>(Random::NextInt(375, 475));
-		printf("%f\n", spawnY);
 		if (Random::NextBool(50))
 		{
 			NewButterfly(Vector2f(spawnX, spawnY), Golden, butterflies);

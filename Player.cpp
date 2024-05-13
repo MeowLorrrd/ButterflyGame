@@ -206,7 +206,7 @@ void Player::UseItem(Input* input, Butterfly* _gb[BUTTERFLY_LIMIT])
 	}
 #pragma endregion
 
-	selected_item_slot = Math::Clamp(selected_item_slot, 0, 8);
+	selected_item_slot = Math::Clamp<int>(selected_item_slot, 0, 8);
 	if (input->HasPressedKey(Keyboard::E))
 		inventory_open = !inventory_open;
 	if (input->HasPressedMouse(Mouse::Left) && !Item::ItemIsUsed(*items))
