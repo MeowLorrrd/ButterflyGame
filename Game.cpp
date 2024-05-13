@@ -69,9 +69,6 @@ void Game::UpdateInput()
 		}
 	}
 	if (input.HasPressedKey(Keyboard::Escape)) render_window->close();
-#ifndef DEBUG
-	if (input.HasPressedKey(Keyboard::N)) Butterfly::NewButterfly(Vector2f(800.f, 450.f), 0u, butterflies);
-#endif
 }
 
 void Game::Draw()

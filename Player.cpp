@@ -97,68 +97,6 @@ void Player::Movement(Input* input)
 }
 void Player::UseItem(Input* input, Butterfly* _gb[BUTTERFLY_LIMIT])
 {
-#ifndef DEBUG
-	if (input->HasPressedKey(Keyboard::Numpad0))
-	{
-		Item::TurnItemToNewType(*inventory[0], 0);
-	}
-	else if (input->HasPressedKey(Keyboard::Numpad1))
-	{
-		Item::TurnItemToNewType(*inventory[1], 1);
-	}
-	else if (input->HasPressedKey(Keyboard::Numpad2))
-	{
-		Item::TurnItemToNewType(*inventory[2], 1);
-	}
-	else if (input->HasPressedKey(Keyboard::Numpad3))
-	{
-		Item::TurnItemToNewType(*inventory[3], 1);
-	}
-	else if (input->HasPressedKey(Keyboard::Numpad4))
-	{
-		Item::TurnItemToNewType(*inventory[4], 1);
-	}
-	else if (input->HasPressedKey(Keyboard::Numpad5))
-	{
-		Item::TurnItemToNewType(*inventory[5], 1);
-	}
-	else if (input->HasPressedKey(Keyboard::Numpad6))
-	{
-		Item::TurnItemToNewType(*inventory[6], 1);
-	}
-	else if (input->HasPressedKey(Keyboard::Numpad7))
-	{
-		Item::TurnItemToNewType(*inventory[7], 1);
-	}
-	else if (input->HasPressedKey(Keyboard::Numpad8))
-	{
-		Item::TurnItemToNewType(*inventory[8], 1);
-	}
-	else if (input->HasPressedKey(Keyboard::Numpad9))
-	{
-		Item::TurnItemToNewType(*inventory[9], 1);
-	}
-	else if (input->HasPressedKey(Keyboard::Add))
-	{
-		Item::TurnItemToNewType(*inventory[10], 1);
-	}
-	else if (input->HasPressedKey(Keyboard::F1))
-	{
-		Item::TurnItemToNewType(*inventory[11], 1);
-	}
-	else if (input->HasPressedKey(Keyboard::F2))
-	{
-		Item::TurnItemToNewType(*inventory[12], 1);
-	}
-	else if (input->HasPressedKey(Keyboard::F3))
-	{
-		Item::TurnItemToNewType(*inventory[13], 1);
-	}
-	else if (input->HasPressedKey(Keyboard::F4))
-	{
-		Item::TurnItemToNewType(*inventory[14], 1);
-	}
-#endif
 #pragma region  ugly input stuff
 	if (input->HasPressedKey(Keyboard::Left))
 	{
