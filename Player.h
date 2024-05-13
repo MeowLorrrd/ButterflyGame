@@ -31,8 +31,8 @@ private:
 		JUMP_POWER = -11.8f,
 		GRAVITY = 0.34f,
 		DEFAULT_WIDTH = 24.0f,
-		DEFAULT_HEIGHT = 160.0f;
-	const Uint8 TOTAL_FRAMES = 5U;
+		DEFAULT_HEIGHT = 256.0f;
+	const Uint8 TOTAL_FRAMES = 8U;
 
 	Vector2u window_borders;
 

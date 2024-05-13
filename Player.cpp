@@ -41,7 +41,7 @@ void Player::Draw(RenderWindow& render_target, RenderStates render_states)
 #pragma endregion
 
 #pragma region ITEMS
-	//Draw Inventory (ALL ITEMS, if item type is Item::COUNT, draw emty slot
+	//Draw Inventory (ALL ITEMS, if item type is Item::COUNT, draw empty slot
 	for (int i = 0u; i < INVENTORY_SIZE; i++)
 	{
 		Item::DrawInventoryUI(render_target, render_states, *inventory[i], i, selected_item_slot, inventory_open);
@@ -79,7 +79,7 @@ void Player::Movement(Input* input)
 	{
 		velocity.x *= (can_jump ? 0.92f : 0.98f);
 		// ^ more slowdown if player is floored
-		if (velocity.x > -5e-2 && velocity.x < 5e-2) velocity.x = 0.0f;
+		if (velocity.x > -5e-1 && velocity.x < 5e-1) velocity.x = 0.0f;
 		// ^ set x velocity to 0 if x velocity is very low
 	}
 	if (input->IsPressingKey(Keyboard::Space))
@@ -217,14 +217,10 @@ void Player::Collision()
 
 void Player::SetFrame()
 {
+	current_frame = 0;
 	if (velocity.y != 0.0f)
 	{
 		current_frame = 1;
-	}
-
-	else if (Item::ItemIsUsed(*items))
-	{
-		current_frame = 4;
 	}
 	else if (velocity.x != 0.0f)
 	{
@@ -235,6 +231,10 @@ void Player::SetFrame()
 	{
 		animation_time--;
 		current_frame = 0;
+	}
+	if (Item::ItemIsUsed(*items))
+	{
+		current_frame += 4;
 	}
 	animation_time = Math::ResetValue<int>(animation_time, 0, (int)(height * TOTAL_FRAMES));
 }
