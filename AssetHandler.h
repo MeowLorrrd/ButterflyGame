@@ -12,7 +12,6 @@ public:
 	AssetHandler();
 	virtual ~AssetHandler();
 	static Texture* GetTexture(AssetHandler* instance, int texture_type, int specific_type);
-	static Text* GetText(AssetHandler instance);
 	static Font* GetFont(AssetHandler* instance);
 
 	enum TextureTypes

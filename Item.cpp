@@ -22,10 +22,12 @@ Item::Item(AssetHandler* _ah)
 	stack = 0;
 	max_stack = 1;
 	inventory_stack_text.setFont(*AssetHandler::GetFont(asset_handler));
+	inventory_stack_text.setOutlineColor(Color::Color(0, 0, 0, 255));
+	inventory_stack_text.setOutlineThickness(0.5f);
 }
 Item::~Item()
 {
-	
+
 }
 
 void Item::DrawInventoryUI(RenderWindow& render_window, RenderStates render_states, Item& _inv, unsigned int slot_type, unsigned int s_item, bool full_ui)

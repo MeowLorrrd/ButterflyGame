@@ -320,6 +320,10 @@ void Player::SetItem(Item* inventory[INVENTORY_SIZE], unsigned char item_type)
 		if (inventory[i]->type == Item::COUNT)
 		{
 			inventory[i]->type = item_type;
+			if (inventory[i]->type >= Item::ButterflyMonarch && inventory[i]->type <= Item::ButterflyGlass)
+			{
+				inventory[i]->max_stack = 30;
+			}
 			inventory[i]->stack = 1;
 			return;
 		}
