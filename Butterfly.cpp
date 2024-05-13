@@ -91,7 +91,7 @@ void Butterfly::Movement(float dt, Butterfly& butterfly)
 		if (butterfly.custom_ai[0] >= idle_time || butterfly.alive_timer == 1)
 		{
 			butterfly.newX = (float)Random::NextInt(10, 1590);
-			butterfly.newY = (float)Random::NextInt(700, 750);
+			butterfly.newY = (float)Random::NextInt(725, 790);
 			butterfly.custom_ai[0] = 0.0f;
 		}
 		else if (Math::Vec2Distance(butterfly.GetCenter(butterfly), Vector2f(butterfly.newX, butterfly.newY)) < 200.f)
@@ -186,8 +186,10 @@ void Butterfly::SpawnButterflyNatural(int chance, Butterfly* butterflies[BUTTERF
 	if (chance < 1) return; // Disable spawning
 	if (Random::NextBool(chance))
 	{
-		float spawnX = Random::Pick<float>(static_cast<float>(Random::NextInt(-100.0f, -25.0f)), static_cast<float>(Random::NextInt(1700.0f, 1800.0f)));
-		float spawnY = static_cast<float>(Random::NextInt(400, 550));
+		int d = -100;
+		float spawnX = Random::Pick<float>(static_cast<float>(Random::NextInt(-100, -25)), static_cast<float>(Random::NextInt(1700, 1800)));
+		float spawnY = static_cast<float>(Random::NextInt(375, 475));
+		printf("%f\n", spawnY);
 		if (Random::NextBool(50))
 		{
 			NewButterfly(Vector2f(spawnX, spawnY), Golden, butterflies);

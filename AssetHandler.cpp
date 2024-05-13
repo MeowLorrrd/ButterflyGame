@@ -79,6 +79,12 @@ AssetHandler::AssetHandler()
 		}
 		item_textures.push_back(_t);
 	}
+	window_icon = new Texture();
+	texture_path = "Assets/Extra/WindowIcon.png";
+	if (!window_icon->loadFromFile(texture_path))
+	{
+		printf("Could not load file!\nMissing file : \n\t[% s]", texture_path.c_str());
+	}
 }
 
 AssetHandler::~AssetHandler()
@@ -118,6 +124,8 @@ Texture* AssetHandler::GetTexture(AssetHandler* instance, int type, int _st = 0)
 		return (_st >= 0 && _st <= instance->ui_textures.size()) ? &instance->ui_textures.at(_st) : &instance->ui_textures.at(0);
 	case TextureTypes::Items:
 		return (_st >= 0 && _st <= instance->item_textures.size()) ? &instance->item_textures.at(_st) : &instance->item_textures.at(0);
+	case TextureTypes::WindowIcon:
+		return instance->window_icon;
 	}
 	return new Texture();
 }

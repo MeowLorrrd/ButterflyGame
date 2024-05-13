@@ -21,7 +21,8 @@ public:
 		Backgrounds,
 		Floors,
 		UI,
-		Items
+		Items,
+		WindowIcon
 	};
 	enum ButterflyTypes
 	{
@@ -60,5 +61,6 @@ private:
 	Texture* floor_textures[1];
 	std::vector<Texture> ui_textures;
 	std::vector<Texture> item_textures;
+	Texture* window_icon;
 };
 #endif

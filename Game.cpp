@@ -25,6 +25,9 @@ void Game::SetupGameWindow()
 	this->render_window->setFramerateLimit(60);
 
 	this->asset_handler = new AssetHandler();
+	Texture icon = Texture();
+	icon = *AssetHandler::GetTexture(asset_handler, AssetHandler::WindowIcon, 0);
+	this->render_window->setIcon(icon.getSize().x, icon.getSize().y, icon.copyToImage().getPixelsPtr());
 }
 void Game::Update(float _deltaTime)
 {
