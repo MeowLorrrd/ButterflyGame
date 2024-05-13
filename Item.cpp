@@ -85,9 +85,6 @@ void Item::DrawInWorld(RenderWindow& render_window, RenderStates render_states, 
 		_item.frame.setPosition(_item.position);
 		_item.frame.setRotation(_item.rotation);
 		_item.frame.setScale(Vector2f(_item.dirX, 1.f));
-
-		_item.frame.setOutlineColor(Color::Color(255, 0, 0, 255));
-		_item.frame.setOutlineThickness(1.f);
 		render_window.draw(_item.frame, render_states);
 	}
 }
@@ -138,11 +135,12 @@ void Item::NewItem(Vector2f xy, Uint8 _type, Item& _item)
 		break;
 	};
 }
+//This func breaks inventory sprites...
 void Item::TurnItemToNewType(Item& old, unsigned short new_type)
 {
 	old.type = (new_type < COUNT) ? new_type : 0;
-	if (old.type >= Item::ButterflyMonarch && old.type <= Item::ButterflyGlass) old.max_stack = 30;
 	old.frame.setTexture(AssetHandler::GetTexture(old.asset_handler, AssetHandler::Items, old.type));
+	old.frame.setSize(Vector2f(56.f, 56.f));
 }
 
 Vector2f Item::GetPosition(Item& item)

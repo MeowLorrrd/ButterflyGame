@@ -17,6 +17,9 @@ Control your frog-guy:
 	'1-9' to navigate your hotbar
 	'E' to view your full inventory
 	'Esc' to exit the game
+	While debugging:
+		Pressing a key on the numpad or F1-F4 will set an item in the inventory
+		It will override any existing item!
 
 
 

@@ -4,9 +4,9 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 #include "Math.cpp"
 #include "AssetHandler.h"
-#include <SFML/Graphics/Sprite.hpp>
 constexpr auto INVENTORY_SIZE = 37U;
 
 using namespace sf;
