@@ -9,6 +9,8 @@ Input::Input()
 	
 	for (int i = 0u; i < sizeof(keyState) / sizeof(*keyState); i++) keyState[i] = false;
 	for (int i = 0u; i < sizeof(oldKeyState) / sizeof(*oldKeyState); i++) oldKeyState[i] = false;
+
+
 }
 Input::~Input()
 {
@@ -21,6 +23,10 @@ bool Input::IsPressingKey(Keyboard::Key kb) const
 bool Input::HasPressedKey(Keyboard::Key kb) const
 {
 	return keyState[kb] && !oldKeyState[kb];
+}
+bool Input::HasPressedKey2(Keyboard::Key key) const
+{
+	return false;
 }
 bool Input::IsPressingMouse(Mouse::Button m) const
 {
