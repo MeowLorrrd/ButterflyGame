@@ -32,6 +32,9 @@ void Game::SetupGameWindow()
 void Game::Update(float _deltaTime)
 {
 	UpdateInput();
+	if (!render_window->hasFocus())
+		return;
+
 	my_player->Update(_deltaTime, &input, butterflies);
 	for (int i = 0u; i < BUTTERFLY_LIMIT; i++)
 	{
@@ -73,6 +76,8 @@ void Game::UpdateInput()
 
 void Game::Draw()
 {
+	if (!render_window->hasFocus())
+		return;
 	render_window->clear();
 	background.Draw(*render_window, render_states);
 	for (int i = 0u; i < BUTTERFLY_LIMIT; i++)

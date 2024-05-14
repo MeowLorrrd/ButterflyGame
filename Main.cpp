@@ -7,12 +7,9 @@ int main()
 	Game game;
 	while (game.WindowIsActive())
 	{
-		if (game.WindowHasFocus())
-		{
-			deltaTime = clock.restart().asSeconds();
-			game.Update(deltaTime);
-			game.Draw();
-		}
+		deltaTime = clock.restart().asSeconds();
+		game.Update(deltaTime);
+		game.Draw();
 	}
 	return EXIT_SUCCESS;
 }
