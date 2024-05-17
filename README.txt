@@ -33,9 +33,12 @@ Building the game:
 	Libaries should automatically be copied over into the build directory
 	If not:
 		Copy files for the debugging build. They have -d- in their filename
+		These files are found in include\SFML-2.6.1\bin\
 		Paste them in x64\Debug
+
 		Copy files for the release build. They have no -d- in their filename
 		Paste them in x64\Release
+		These files are also found in include\SFML-2.6.1\bin\
 	
 	Assets should automatically be copied into the build directory on build
-	If not, copy and paste Assets\ to the build dir
+	If not, copy and paste Assets\ to x64\Debug\ AND x64\Release\
